@@ -1,2 +1,4 @@
 fake_social_site_venv/
 my_api_venv/
+*.pyc
+*/db.sqlite3
