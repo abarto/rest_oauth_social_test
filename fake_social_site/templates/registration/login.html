@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% load bootstrap3 %}
+
+{% block title %}Fake Social Site - Login{% endblock %}
+
+{% block content %}
+<div class="center-container">
+    <div class="login-form">
+        <h4 class="login-text">Login</h4>
+        <div class="login-form-panel clearfix">
+            <form action="." method="post" class="form">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <input type="hidden" name="next" value="{{ next }}" />
+                <button type="submit" class="btn btn-primary pull-right">{% bootstrap_icon "log-in" %} Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
