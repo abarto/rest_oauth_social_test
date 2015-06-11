@@ -39,6 +39,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'oauth2_provider',
     'corsheaders',
+    'items',
+    'concepts'
 )
 
 MIDDLEWARE_CLASSES = (
