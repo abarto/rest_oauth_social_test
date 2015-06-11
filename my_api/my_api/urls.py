@@ -17,20 +17,23 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 from rest_framework.routers import DefaultRouter
+from rest_framework.urlpatterns import format_suffix_patterns
 
 from .resources import UserViewSet, GroupViewSet
-from items.resources import ItemViewSet
+from items.resources import ItemViewSet, ItemGroupViewSet
 from concepts.resources import ConceptViewSet
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'groups', GroupViewSet)
 router.register(r'items', ItemViewSet)
+router.register(r'itemgroups', ItemGroupViewSet)
 router.register(r'concepts', ConceptViewSet)
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
-    url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
+    url(r'', include(router.urls))
 ]
