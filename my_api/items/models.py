@@ -8,7 +8,7 @@ class Item(TimeStampedModel, models.Model):
     name = models.CharField(_('title'), max_length=255)
     description = models.TextField(_('description'), blank=True, null=True)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('owner'))
-    mass = models.FloatField(_('description'), blank=True, null=True)
+    mass = models.FloatField(_('mass'), blank=True, null=True)
 
 
 class ItemGroup(TimeStampedModel, models.Model):

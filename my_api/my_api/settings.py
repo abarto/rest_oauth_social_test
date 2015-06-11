@@ -40,7 +40,8 @@ INSTALLED_APPS = (
     'oauth2_provider',
     'corsheaders',
     'items',
-    'concepts'
+    'concepts',
+    'rest_framework'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -107,3 +108,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAdminUser',
+    ]
+}
