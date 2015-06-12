@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'bootstrap3',
     'oauth2_provider',
     'corsheaders',
+    'rest_framework'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -112,3 +113,16 @@ STATICFILES_DIRS = [
 LOGIN_REDIRECT_URL = 'home'
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+OAUTH2_PROVIDER = {
+    'SCOPES': {'read': 'Read scope', 'write': 'Write scope'}
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.ext.rest_framework.OAuth2Authentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
