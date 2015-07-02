@@ -14,6 +14,12 @@ function showLoginErrors(text) {
     $('.login-errors').show('fast').delay(2000).hide('fast');
 }
 
+function hideLoginFormShowTestArea() {
+    $('.login-form').hide('fast', function() {
+        $('.api-test-area').show('fast');
+    });
+}
+
 $(function() {
     var $username = $('#username');
     var $password = $('#password');
@@ -21,11 +27,6 @@ $(function() {
     $('#fss-login-button').click(function() {
         addLogEntry('Requesting access token from FSS...');
 
-        $('.login-form').hide('fast', function() {
-            $('.api-test-area').show('fast');
-        });
-
-        /*
         $.ajax({
             url: 'http://localhost:8005/o/token/',
             method: 'POST',
@@ -41,10 +42,14 @@ $(function() {
             addLogEntry('Exchanging FSS access token with My API access token... ');
 
             $.ajax({
-                url: fssRegisterByAccessTokenUrl + '?access_token=' + data.access_token
+                url: fssRegisterByAccessTokenUrl,
+                data: {
+                    access_token: data.access_token
+                }
             })
             .done(function(data) {
                 addLogEntry('Got access token from FSS: ' + JSON.stringify(data));
+                hideLoginFormShowTestArea();
             })
             .fail(function(data, textStatus) {
                 addLogEntry('Fail response exchanging access token from FSS: ' + JSON.stringify(data));
@@ -55,6 +60,44 @@ $(function() {
             addLogEntry('Fail response requesting access token from FSS: ' + JSON.stringify(data));
             showLoginErrors('Unable to log into <strong>FSS</strong>. Check logs.')
         });
-        */
+    });
+
+    $('#fsswp-login-button').click(function() {
+        addLogEntry('Requesting access token from FSS...');
+
+        $.ajax({
+            url: 'http://localhost:8005/o/token/',
+            method: 'POST',
+            data: {
+                username: $username.val(),
+                password: $password.val(),
+                grant_type: 'password',
+                client_id: '7xgbGncy4u4QqNPuOhX6ge7drc5OKfzNkgN1uynS'
+            }
+        })
+        .done(function(data) {
+            addLogEntry('Got access token from FSS: ' + JSON.stringify(data));
+            addLogEntry('Exchanging FSS access token with My API access token (using parameters)... ');
+
+            $.ajax({
+                url: fsswpRegisterByAccessTokenUrl,
+                data: {
+                    'access_token': data.access_token,
+                    'username': $username.val()
+                }
+            })
+            .done(function(data) {
+                addLogEntry('Got access token from FSS: ' + JSON.stringify(data));
+                hideLoginFormShowTestArea();
+            })
+            .fail(function(data, textStatus) {
+                addLogEntry('Fail response exchanging access token from FSS: ' + JSON.stringify(data));
+                showLoginErrors('Unable to log into <strong>My API</strong>. Check logs.')
+            });
+        })
+        .fail(function(data, textStatus) {
+            addLogEntry('Fail response requesting access token from FSS: ' + JSON.stringify(data));
+            showLoginErrors('Unable to log into <strong>FSS</strong>. Check logs.')
+        });
     });
 });

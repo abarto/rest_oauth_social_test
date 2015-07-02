@@ -12,8 +12,10 @@ from .tools import get_access_token
 @psa('social:complete')
 def register_by_access_token(request, backend):
     token = request.GET.get('access_token')
+    username = request.GET.get('username', None)
 
-    user = request.backend.do_auth(token)
+    # We pass the parameters to the backend so it can make the appropriate requests to the third party site.
+    user = request.backend.do_auth(token, username=username)
 
     if user:
         login(request, user)

@@ -36,8 +36,8 @@ class FakeSocialSiteOAuth2(BaseOAuth2):
             return None
 
 
-class FakeSocialSiteWithParamOAuth2(BaseOAuth2):
-    name = 'fake_social_site_with_param'
+class FakeSocialSiteWithParamsOAuth2(BaseOAuth2):
+    name = 'fake_social_site_with_params'
     SCOPE_SEPARATOR = ','
     EXTRA_DATA = [
         ('id', 'id')
@@ -57,10 +57,10 @@ class FakeSocialSiteWithParamOAuth2(BaseOAuth2):
             'last_name': response.get('last_name'),
         }
 
-    def user_data(self, access_token, *args, **kwargs):
+    def user_data(self, access_token, username=None, *args, **kwargs):
         try:
             return self.get_json(
-                settings.FAKE_SOCIAL_SITE_WITH_PARAM_AUTH_USER_DETAILS_URL.format(**kwargs),
+                settings.FAKE_SOCIAL_SITE_WITH_PARAM_AUTH_USER_DETAILS_URL.format(username=username),
                 headers={'Authorization': 'Bearer {}'.format(access_token)}
             )
         except ValueError:

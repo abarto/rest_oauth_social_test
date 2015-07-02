@@ -17,9 +17,9 @@ def user_details(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def user_details_by_username(request, username=None):
-    username_user = get_user_model().objects.filter(username=username).first()
+    user = get_user_model().objects.filter(username=username).first()
 
-    if username and username == request.user:
+    if user and user == request.user:
         serializer = UserSerializer(request.user)
 
         return Response(serializer.data)

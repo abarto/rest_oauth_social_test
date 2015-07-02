@@ -119,7 +119,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 AUTHENTICATION_BACKENDS = (
     'users.auth.FakeSocialSiteOAuth2',
-    'users.auth.FakeSocialSiteWithParamOAuth2',
+    'users.auth.FakeSocialSiteWithParamsOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
 
