@@ -23,6 +23,42 @@ function hideLoginFormShowTestArea() {
 $(function() {
     var $username = $('#username');
     var $password = $('#password');
+    var access_token = null;
+    var refresh_token = null;
+
+    $('#list-items').click(function() {
+        addLogEntry('Requesting /items...');
+
+        $.ajax({
+            url: '/api/items',
+            headers: {
+                'Authorization': 'Bearer ' + access_token
+            }
+        })
+        .done(function(data) {
+            addLogEntry('Got response from /api/items request: ' + JSON.stringify(data));
+        })
+        .fail(function(data) {
+            addLogEntry('Fail response from /api/items request: ' + JSON.stringify(data));
+        });
+    });
+
+    $('#list-concepts').click(function() {
+        addLogEntry('Requesting /api/concepts...');
+
+        $.ajax({
+            url: '/api/concepts',
+            headers: {
+                'Authorization': 'Bearer ' + access_token
+            }
+        })
+        .done(function(data) {
+            addLogEntry('Got response from /api/concepts request: ' + JSON.stringify(data));
+        })
+        .fail(function(data) {
+            addLogEntry('Fail response from /api/concepts request: ' + JSON.stringify(data));
+        });
+    });
 
     $('#fss-login-button').click(function() {
         addLogEntry('Requesting access token from FSS...');
@@ -49,6 +85,8 @@ $(function() {
             })
             .done(function(data) {
                 addLogEntry('Got access token from FSS: ' + JSON.stringify(data));
+                access_token = data.access_token;
+                refresh_token = data.refresh_token;
                 hideLoginFormShowTestArea();
             })
             .fail(function(data, textStatus) {
@@ -88,6 +126,8 @@ $(function() {
             })
             .done(function(data) {
                 addLogEntry('Got access token from FSS: ' + JSON.stringify(data));
+                access_token = data.access_token;
+                refresh_token = data.refresh_token;
                 hideLoginFormShowTestArea();
             })
             .fail(function(data, textStatus) {
