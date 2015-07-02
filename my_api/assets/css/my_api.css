@@ -1,0 +1,95 @@
+html, body {
+    background-color: #fff;
+    font-family: sans-serif;
+}
+
+.main-container {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: stretch;
+    flex-direction: column;
+}
+
+.top-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex: 1;
+}
+
+.login-form {
+    width: 25vw;
+}
+
+.login-form-panel {
+    background-color: #ccc;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.login-errors {
+    display: none;
+}
+
+.api-test-area {
+    display: none;
+    width: 75vw;
+    height: 70vh;
+}
+
+.api-test-area-flex {
+    width: 75vw;
+    height: 70vh;
+    display: flex;
+    background-color: #ccc;
+    padding: 10px;
+    border-radius: 10px;
+    align-items: stretch;
+    flex-direction: column;
+}
+
+.button-panel {
+}
+
+.api-response-panel {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #fff;
+    color: #000;
+    border-radius: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1;
+}
+
+.bottom-container {
+    height: 20vh;
+    background-color: #000;
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+}
+
+.log-content {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.log-entry {
+    color: #fff;
+    font-size: small;
+    background-color: #111;
+    border-radius: 2px;
+    margin: 2px;
+}
+
+.log-timestamp {
+    color: #ff0;
+    font-size: x-small;
+}
+
+.log-text {
+    margin-left: 2px;
+}

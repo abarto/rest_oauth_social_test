@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
+from django.views.generic import TemplateView
 
 from rest_framework.routers import DefaultRouter
-from rest_framework.urlpatterns import format_suffix_patterns
 
 from .resources import UserViewSet, GroupViewSet
 from items.resources import ItemViewSet, ItemGroupViewSet
@@ -33,7 +34,10 @@ router.register(r'concepts', ConceptViewSet)
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    url('', include('social.apps.django_app.urls', namespace='social')),
+    url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-
-    url(r'', include(router.urls))
+    url(r'^users/', include('users.urls', namespace='users')),
+    url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
+    url(r'^api/', include(router.urls))
 ]

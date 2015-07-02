@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}{% endblock %}</title>
+        {% bootstrap_css %}
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,900' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{% static 'css/my_api.css' %}"/>
+        {% block extra_head %}{% endblock %}
+    </head>
+    <body>
+        {% block content %}{% endblock %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        {% bootstrap_javascript %}
+        {% block extra_js %}{% endblock %}
+    </body>
+</html>

@@ -41,7 +41,9 @@ INSTALLED_APPS = (
     'corsheaders',
     'items',
     'concepts',
-    'rest_framework'
+    'rest_framework',
+    'social.apps.django_app.default',
+    'bootstrap3'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -61,7 +63,9 @@ ROOT_URLCONF = 'my_api.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -107,14 +111,56 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'assets'),
+]
+
 CORS_ORIGIN_ALLOW_ALL = True
+
+AUTHENTICATION_BACKENDS = (
+    'users.auth.FakeSocialSiteOAuth2',
+    'users.auth.FakeSocialSiteWithParamOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+OAUTH2_PROVIDER = {
+    'SCOPES': {'read': 'Read scope', 'write': 'Write scope'}
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
         'oauth2_provider.ext.rest_framework.OAuth2Authentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ]
+}
+
+LOGIN_REDIRECT_URL = 'home'
+
+FAKE_SOCIAL_SITE_AUTH_AUTHORIZATION_URL = 'http://localhost:8005/o/authorize'
+FAKE_SOCIAL_SITE_AUTH_ACCESS_TOKEN_URL = 'http://localhost:8005/o/token'
+FAKE_SOCIAL_SITE_AUTH_USER_DETAILS_URL = 'http://localhost:8005/user_details'
+
+FAKE_SOCIAL_SITE_WITH_PARAM_AUTH_AUTHORIZATION_URL = 'http://localhost:8005/o/authorize'
+FAKE_SOCIAL_SITE_WITH_PARAM_AUTH_ACCESS_TOKEN_URL = 'http://localhost:8005/o/token'
+FAKE_SOCIAL_SITE_WITH_PARAM_AUTH_USER_DETAILS_URL = 'http://localhost:8005/user_details_by_username/{username}/'
+
+MY_API_APP_FSS_CLIENT_ID = '7xgbGncy4u4QqNPuOhX6ge7drc5OKfzNkgN1uynS'
+MY_API_APP_FSS_CLIENT_SECRET = 'AljztoFgMSDCand6cYKBEbz8aOuufzaku1wTrVpdY6IJlX61YSWjebShhmDUUAQvyJ00d5JY2wlCoizVlPqWg87BAJYHGpRBWgfE1tleCYN9y6Vq96ecG70rKT1jolLd'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        },
+    },
 }

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block title %}My API{% endblock %}
+
+{% block content %}
+    <div class="main-container">
+        <div class="top-container">
+            <div class="login-form">
+                <div class="login-form-panel clearfix">
+                    <form action="." method="post" class="form">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input id="username" class="form-control" type="text" name="username" placeholder="Username" />
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input id="password" class="form-control" type="password" name="password" placeholder="Password" />
+                        </div>
+                        <div class="login-errors alert alert-danger" role="alert"></div>
+                        <a id="fss-login-button" class="btn btn-primary" href="#">Login with FSS</a>
+                        <a id="fsswp-login-button" class="btn btn-primary" href="#">Login with FSS (with Username)</a>
+                    </form>
+                </div>
+            </div>
+            <div class="api-test-area">
+                <div class="api-test-area-flex">
+                    <div class="button-panel">
+                        <a id="list-items" class="btn btn-primary" href="#">List items</a>
+                        <a id="list-concepts" class="btn btn-primary" href="#">List concepts</a>
+                    </div>
+                    <div class="api-response-panel"></div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-container">
+            <div class="log-content"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+
+    <script>
+        var fssRegisterByAccessTokenUrl = "{% url 'users:register_by_access_token' backend='fake_social_site'%}";
+        var fsswpRegisterByAccessTokenUrl = "{% url 'users:register_by_access_token' backend='fake_social_site_with_params'%}";
+    </script>
+
+    <script src="{% static 'js/my_api.js' %}"></script>
+{% endblock %}
