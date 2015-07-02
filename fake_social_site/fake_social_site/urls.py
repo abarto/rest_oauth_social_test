@@ -18,18 +18,13 @@ from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 
-from rest_framework.routers import DefaultRouter
-
-from .resources import UserViewSet
-
-
-router = DefaultRouter()
-router.register(r'users', UserViewSet)
+from .views import user_details, user_details_by_username
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url(r'^$', login_required(TemplateView.as_view(template_name='home.html')), name='home'),
-    url(r'^', include(router.urls))
+    url(r'^user_details/$', user_details, name='user_details'),
+    url(r'^user_details_by_username/(?P<username>.+)/$', user_details_by_username, name='user_details_by_username')
 ]
