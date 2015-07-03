@@ -2,21 +2,20 @@ from __future__ import absolute_import, unicode_literals
 
 from oauth2_provider.settings import oauth2_settings
 from oauthlib.common import generate_token
+
 from django.http import JsonResponse
 from oauth2_provider.models import AccessToken, Application, RefreshToken
 from django.utils.timezone import now, timedelta
  
  
 def get_token_json(access_token):
-    token = {
+    return JsonResponse({
         'access_token': access_token.token,
         'expires_in': oauth2_settings.ACCESS_TOKEN_EXPIRE_SECONDS,
         'token_type': 'Bearer',
         'refresh_token': access_token.refresh_token.token,
         'scope': access_token.scope
-    }
-
-    return JsonResponse(token)
+    });
  
  
 def get_access_token(user):

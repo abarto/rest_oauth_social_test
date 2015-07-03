@@ -1,9 +1,9 @@
 from __future__ import absolute_import, unicode_literals
 
 
-from django.http import HttpResponse
 from django.contrib.auth import login
 
+from django.http import JsonResponse
 from social.apps.django_app.utils import psa
  
 from .tools import get_access_token
@@ -22,4 +22,10 @@ def register_by_access_token(request, backend):
 
         return get_access_token(user)
     else:
-        return HttpResponse("error")
+        return JsonResponse(
+            {
+                "error": "unsuccessful_token_exchange",
+                "error_description": "Unable to complete token exchange with social backend."
+            },
+            status=401
+        )
