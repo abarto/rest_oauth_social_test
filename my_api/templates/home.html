@@ -22,6 +22,7 @@
                             <input id="password" class="form-control" type="password" name="password" placeholder="Password" />
                         </div>
                         <div class="login-errors alert alert-danger" role="alert"></div>
+                        <a id="login-button" class="btn btn-primary" href="#">Login</a>
                         <a id="fss-login-button" class="btn btn-primary" href="#">Login with FSS</a>
                         <a id="fsswp-login-button" class="btn btn-primary" href="#">Login with FSS (with Username)</a>
                     </form>
@@ -33,7 +34,7 @@
                         <a id="list-items" class="btn btn-primary" href="#">List items</a>
                         <a id="list-concepts" class="btn btn-primary" href="#">List concepts</a>
                     </div>
-                    <div class="api-response-panel"></div>
+                    <div id="api-response-panel"></div>
                 </div>
             </div>
         </div>
@@ -45,6 +46,39 @@
 
 {% block extra_js %}
     <script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+    <script src="{% static 'js/handlebars-v3.0.3.js' %}"></script>
+
+    {% verbatim %}
+    <script id="item-list-template" type="text/x-handlebars-template">
+        {{#list items}}
+            <div class="item-list-item">
+                <dl>
+                    <dt>name</dt>
+                    <dd>{{name}}</dd>
+                    <dt>description</dt>
+                    <dd>{{description}}</dd>
+                    <dt>mass</dt>
+                    <dd>{{mass}}</dd>
+                    <dt>owner</dt>
+                    <dd>{{owner}}</dd>
+                </dl>
+            </div>
+        {{/list}}
+    </script>
+
+    <script id="concept-list-template" type="text/x-handlebars-template">
+        {{#list concepts}}
+            <div class="concept-list-item">
+                <dl>
+                    <dt>name</dt>
+                    <dd>{{name}}</dd>
+                    <dt>parent</dt>
+                    <dd>{{parent}}</dd>
+                </dl>
+            </div>
+        {{/list}}
+    </script>
+    {% endverbatim %}
 
     <script>
         var fssRegisterByAccessTokenUrl = "{% url 'users:register_by_access_token' backend='fake_social_site'%}";

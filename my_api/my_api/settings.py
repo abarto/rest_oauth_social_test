@@ -146,9 +146,6 @@ FAKE_SOCIAL_SITE_WITH_PARAM_AUTH_AUTHORIZATION_URL = 'http://localhost:8005/o/au
 FAKE_SOCIAL_SITE_WITH_PARAM_AUTH_ACCESS_TOKEN_URL = 'http://localhost:8005/o/token'
 FAKE_SOCIAL_SITE_WITH_PARAM_AUTH_USER_DETAILS_URL = 'http://localhost:8005/user_details_by_username/{username}/'
 
-MY_API_APP_FSS_CLIENT_ID = '7xgbGncy4u4QqNPuOhX6ge7drc5OKfzNkgN1uynS'
-MY_API_APP_FSS_CLIENT_SECRET = 'AljztoFgMSDCand6cYKBEbz8aOuufzaku1wTrVpdY6IJlX61YSWjebShhmDUUAQvyJ00d5JY2wlCoizVlPqWg87BAJYHGpRBWgfE1tleCYN9y6Vq96ecG70rKT1jolLd'
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

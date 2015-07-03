@@ -20,7 +20,7 @@ html, body {
 }
 
 .login-form {
-    width: 25vw;
+    width: 30vw;
 }
 
 .login-form-panel {
@@ -53,7 +53,7 @@ html, body {
 .button-panel {
 }
 
-.api-response-panel {
+#api-response-panel {
     margin-top: 10px;
     padding: 10px;
     background-color: #fff;
@@ -62,6 +62,20 @@ html, body {
     overflow-y: auto;
     overflow-x: hidden;
     flex: 1;
+}
+
+.item-list-item {
+    background-color: #e6e6fa;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.concept-list-item {
+    background-color: #add8e6;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
 }
 
 .bottom-container {

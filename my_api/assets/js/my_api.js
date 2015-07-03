@@ -1,3 +1,19 @@
+var access_token = null;
+var refresh_token = null;
+
+Handlebars.registerHelper('list', function(items, options) {
+    var out = "";
+
+    for (item of items) {
+        out = out + options.fn(item);
+    }
+
+    return out;
+});
+
+var itemListTemplate = Handlebars.compile($("#item-list-template").html());
+var conceptListTemplate = Handlebars.compile($("#concept-list-template").html());
+
 function addLogEntry(text) {
     var date = new Date()
 
@@ -20,11 +36,15 @@ function hideLoginFormShowTestArea() {
     });
 }
 
+function save_tokens(data) {
+    access_token = data.access_token;
+    refresh_token = data.refresh_token;
+}
+
 $(function() {
+    var $apiResponsePanel = $('#api-response-panel');
     var $username = $('#username');
     var $password = $('#password');
-    var access_token = null;
-    var refresh_token = null;
 
     $('#list-items').click(function() {
         addLogEntry('Requesting /items...');
@@ -37,6 +57,10 @@ $(function() {
         })
         .done(function(data) {
             addLogEntry('Got response from /api/items request: ' + JSON.stringify(data));
+
+            var html = itemListTemplate({'items': data});
+
+            $apiResponsePanel.html(html);
         })
         .fail(function(data) {
             addLogEntry('Fail response from /api/items request: ' + JSON.stringify(data));
@@ -54,9 +78,37 @@ $(function() {
         })
         .done(function(data) {
             addLogEntry('Got response from /api/concepts request: ' + JSON.stringify(data));
+
+            var html = conceptListTemplate({'concepts': data});
+
+            $apiResponsePanel.html(html);
         })
         .fail(function(data) {
             addLogEntry('Fail response from /api/concepts request: ' + JSON.stringify(data));
+        });
+    });
+
+    $('#login-button').click(function() {
+        addLogEntry('Requesting access token from My API...');
+
+        $.ajax({
+            url: 'http://localhost:8000/o/token/',
+            method: 'POST',
+            data: {
+                username: $username.val(),
+                password: $password.val(),
+                grant_type: 'password',
+                client_id: '4GyPYtpHrFVCykWHDkS8louGrV3QERWeH39PCR5h'
+            }
+        })
+        .done(function(data) {
+            addLogEntry('Got access token from My API: ' + JSON.stringify(data));
+            save_tokens(data);
+            hideLoginFormShowTestArea();
+        })
+        .fail(function(data, textStatus) {
+            addLogEntry('Fail response requesting access token from My API: ' + JSON.stringify(data));
+            showLoginErrors('Unable to log into <strong>My API</strong>. Check logs.')
         });
     });
 
@@ -85,8 +137,7 @@ $(function() {
             })
             .done(function(data) {
                 addLogEntry('Got access token from FSS: ' + JSON.stringify(data));
-                access_token = data.access_token;
-                refresh_token = data.refresh_token;
+                save_tokens(data);
                 hideLoginFormShowTestArea();
             })
             .fail(function(data, textStatus) {
@@ -126,8 +177,7 @@ $(function() {
             })
             .done(function(data) {
                 addLogEntry('Got access token from FSS: ' + JSON.stringify(data));
-                access_token = data.access_token;
-                refresh_token = data.refresh_token;
+                save_tokens(data);
                 hideLoginFormShowTestArea();
             })
             .fail(function(data, textStatus) {
