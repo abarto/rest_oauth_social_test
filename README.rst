@@ -101,7 +101,7 @@ My API
 
 The second part of the project is a Django site that exposes a simple API using `Django REST Framework <http://www.django-rest-framework.org/>`_ and uses `django-oauth-toolkit <https://github.com/evonove/django-oauth-toolkit>`_ for authentication.
 
-We want to allow users of Fake Social Site access to My API, as well as My API's own user. As mentioned in the introduction the follow the recipe described in `Félix Descôteaux's blogpost <http://httplambda.com/a-rest-api-with-django-and-oauthw-authentication/>`_ (as well as python-social-auth's `documentation on the matter <http://psa.matiasaguirre.net/docs/use_cases.html#signup-by-oauth-access-token>`_). The only change we made was to allow supplying custom parameters to the authentication backend when registering the user for the first time.
+We want to allow users of Fake Social Site access to My API, as well as My API's own user. As mentioned in the introduction the follow the recipe described in `Félix Descôteaux's blogpost <http://httplambda.com/a-rest-api-with-django-and-oauthw-authentication/>`_ (as well as python-social-auth's `documentation on the matter <http://psa.matiasaguirre.net/docs/use_cases.html#signup-by-oauth-access-token>`_). The only change I made was to allow supplying custom parameters to the authentication backend when registering the user for the first time.
 
 We expose a Django view that takes an OAuth2 access_token from Fake Social Site and exchanges it for one of My API, creating a new user and its social user profile in the process:
 
