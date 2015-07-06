@@ -9,6 +9,15 @@ from social.apps.django_app.utils import psa
 from .tools import get_access_token
 
 
+_ERROR_TOKEN_EXCHANGE_RESPONSE = JsonResponse(
+    {
+        "error": "unsuccessful_token_exchange",
+        "error_description": "Unable to complete token exchange with social backend."
+    },
+    status=401
+)
+
+
 @psa('social:complete')
 def register_by_access_token(request, backend):
     token = request.GET.get('access_token')
@@ -18,14 +27,11 @@ def register_by_access_token(request, backend):
     user = request.backend.do_auth(token, username=username)
 
     if user:
-        login(request, user)
-
-        return get_access_token(user)
+        try:
+            login(request, user)
+        except Exception:
+            return _ERROR_TOKEN_EXCHANGE_RESPONSE
+        else:
+            return get_access_token(user)
     else:
-        return JsonResponse(
-            {
-                "error": "unsuccessful_token_exchange",
-                "error_description": "Unable to complete token exchange with social backend."
-            },
-            status=401
-        )
+        return _ERROR_TOKEN_EXCHANGE_RESPONSE
