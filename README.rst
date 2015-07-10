@@ -246,6 +246,11 @@ As you can see, there's not much to it as I leveraged most of BaseOAuth2's funct
 
 All I had to do was add the named paratemeter (``username`` in this case) to the ``user_data`` method, and use its value to make the request to the third party site. When the ``do_auth`` method is invoked in ``register_by_access_token`` we supply the parameter taken from the request, and it is passed to ``user_data`` when it is eventually invoked by python-social-auth's authentication pipeline.
 
+Testing the Project
+-------------------
+
+A `Vagrant <https://www.vagrantup.com/>`_ configuration file is included if you want to test the service yourself.
+
 Feedback
 --------
 
