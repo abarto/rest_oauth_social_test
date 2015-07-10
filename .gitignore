@@ -3,3 +3,5 @@ my_api_venv/
 *.pyc
 db.sqlite3
 .idea
+.vagrant
+static/

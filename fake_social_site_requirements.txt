@@ -2,3 +2,6 @@ Django==1.8.2
 django-bootstrap3==5.4.0
 django-cors-headers==1.1.0
 django-oauth-toolkit==0.8.1
+psycopg2==2.6.1
+gunicorn==19.3.0
+djangorestframework==3.1.3

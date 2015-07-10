@@ -122,7 +122,7 @@ $(function() {
                 username: $username.val(),
                 password: $password.val(),
                 grant_type: 'password',
-                client_id: '7xgbGncy4u4QqNPuOhX6ge7drc5OKfzNkgN1uynS'
+                client_id: 'ZQcMr611iZMcUskTGoRcyZuhqCjZYy08lyOsWM5d'
             }
         })
         .done(function(data) {
@@ -161,7 +161,7 @@ $(function() {
                 username: $username.val(),
                 password: $password.val(),
                 grant_type: 'password',
-                client_id: '7xgbGncy4u4QqNPuOhX6ge7drc5OKfzNkgN1uynS'
+                client_id: 'ZQcMr611iZMcUskTGoRcyZuhqCjZYy08lyOsWM5d'
             }
         })
         .done(function(data) {

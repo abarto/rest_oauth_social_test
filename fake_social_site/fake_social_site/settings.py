@@ -23,9 +23,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '6s79-^!4=r(0v=*0se1^=-zt-h10b$j81h3#ma81k%p7hiz3ib'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = (
+    '127.0.0.1',
+    'localhost'
+)
 
 
 # Application definition
@@ -81,11 +84,14 @@ WSGI_APPLICATION = 'fake_social_site.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'fake_social_site',
+        'USER': 'fake_social_site',
+        'PASSWORD': 'fake_social_site',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -110,6 +116,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'assets'),
 ]
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 LOGIN_REDIRECT_URL = 'home'
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -126,6 +134,8 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ]
 }
+
+USE_X_FORWARDED_HOST = True
 
 LOGGING = {
     'version': 1,
