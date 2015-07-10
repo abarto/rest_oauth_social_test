@@ -20,7 +20,7 @@ The following session illustrates the usage of these endpoints:
 
 ::
 
-    $ curl --header "Content-Type: application/x-www-form-urlencoded" --header "Accept: application/json; indent=4" --request POST --data "username=admin&password=admin&client_id=oteRcScIC2mCPiQa4CfUV4SlYt5QFW1N0u8dfBkz&grant_type=password" http://localhost:8005/o/token/; echo
+    $ curl --header "Content-Type: application/x-www-form-urlencoded" --header "Accept: application/json; indent=4" --request POST --data "username=admin&password=admin&client_id=ZQcMr611iZMcUskTGoRcyZuhqCjZYy08lyOsWM5d&grant_type=password" http://localhost:8005/o/token/; echo
     {"access_token": "zf8x8YiP3nUPjnV8WWArve4c3tZIMN", "token_type": "Bearer", "expires_in": 36000, "refresh_token": "fQF4BSp8nyFs72xobC2UzpeHHYmHYC", "scope": "read write"}
 
     $ curl --head --header "Accept: application/json; indent=4" --request GET http://localhost:8005/user_details/; echo
@@ -64,36 +64,39 @@ I created two OAuth2 applications within the site: One for itself, and another t
 
 ::
 
-    $ ./manage.py dumpdata oauth2_provider.Application | python -mjson.tool
     [
-        {
-            "fields": {
-                "authorization_grant_type": "password",
-                "client_id": "oteRcScIC2mCPiQa4CfUV4SlYt5QFW1N0u8dfBkz",
-                "client_secret": "ff4sHolLOsNVlKakV9GzBUrjqe6eUIAOaZ2veAvtPeWiT3hkohA6SkqDVvZrdnfR9RIaPqpeL9XCbZxOdqvcLjEO5qagXp1hAONEwg4V9M6jLTeot4KqSo6DDIqXqo3C",
-                "client_type": "public",
-                "name": "fake-social-site-app",
-                "redirect_uris": "",
-                "skip_authorization": true,
-                "user": 1
-            },
-            "model": "oauth2_provider.application",
-            "pk": 1
-        },
-        {
-            "fields": {
-                "authorization_grant_type": "password",
-                "client_id": "7xgbGncy4u4QqNPuOhX6ge7drc5OKfzNkgN1uynS",
-                "client_secret": "AljztoFgMSDCand6cYKBEbz8aOuufzaku1wTrVpdY6IJlX61YSWjebShhmDUUAQvyJ00d5JY2wlCoizVlPqWg87BAJYHGpRBWgfE1tleCYN9y6Vq96ecG70rKT1jolLd",
-                "client_type": "public",
-                "name": "my-api-app",
-                "redirect_uris": "",
-                "skip_authorization": true,
-                "user": 1
-            },
-            "model": "oauth2_provider.application",
-            "pk": 2
+    {
+        "model": "oauth2_provider.application",
+        "pk": 1,
+        "fields": {
+            "skip_authorization": true,
+            "redirect_uris": "",
+            "name": "my-api-app",
+            "authorization_grant_type": "password",
+            "client_type": "public",
+            "client_id": "ZQcMr611iZMcUskTGoRcyZuhqCjZYy08lyOsWM5d",
+            "client_secret": "Ve0AVjI4G7JwPj0spAz4jvY0nNxGGfK9q6IJXqARRS3oobDY0sYxqepH0i1euXDLfcbWe8Dx27atNMyJvg3vRLssUBJd4otkoNgxD6jwje5l3ipJnwGpNy3QFq0EhB1g",
+            "user": [
+                "admin"
+            ]
         }
+    },
+    {
+        "model": "oauth2_provider.application",
+        "pk": 2,
+        "fields": {
+            "skip_authorization": true,
+            "redirect_uris": "",
+            "name": "fake-social-site-app",
+            "authorization_grant_type": "password",
+            "client_type": "public",
+            "client_id": "aNARymvEsn21XPdpR9wJ8tPcUyto7rCu1ywo6H1T",
+            "client_secret": "6Q7nFgQ8UExu2XhaNbI56DQAWTQvnVp7D9l3S9Ps1kpju3fH6NSRPfXktF92gZWmG1q7974NkuJSTm7nahTKdmaKcsaevA2U0tRjE4oXD66bqQrxDjQR8B7AK5JOM9Ko",
+            "user": [
+                "admin"
+            ]
+        }
+    }
     ]
 
 My API
@@ -129,7 +132,7 @@ We expose a Django view that takes an OAuth2 access_token from Fake Social Site 
             )
 
     my_api/users/tools.py:
-          
+
     def get_token_json(access_token):
         return JsonResponse({
             'access_token': access_token.token,
@@ -138,8 +141,8 @@ We expose a Django view that takes an OAuth2 access_token from Fake Social Site 
             'refresh_token': access_token.refresh_token.token,
             'scope': access_token.scope
         });
-     
-     
+
+
     def get_access_token(user):
         application = Application.objects.get(name="my-api")
 
@@ -151,10 +154,10 @@ We expose a Django view that takes an OAuth2 access_token from Fake Social Site 
         else:
             old_access_token.delete()
             old_refresh_token.delete()
-     
+
         token = generate_token()
         refresh_token = generate_token()
-     
+
         expires = now() + timedelta(seconds=oauth2_settings.ACCESS_TOKEN_EXPIRE_SECONDS)
         scope = "read write"
 
@@ -164,13 +167,13 @@ We expose a Django view that takes an OAuth2 access_token from Fake Social Site 
                    expires=expires,
                    token=token,
                    scope=scope)
-     
+
         RefreshToken.objects.\
             create(user=user,
                    application=application,
                    token=refresh_token,
                    access_token=access_token)
-     
+
         return get_token_json(access_token)
 
 In the example of the blogpost, the author uses Facebook as the third party. In order to support Fake Social Site, I wrote an authentication backend based on python-social-backend's BaseOAuth2:
@@ -205,7 +208,7 @@ In the example of the blogpost, the author uses Facebook as the third party. In 
                     headers={'Authorization': 'Bearer {}'.format(access_token)}
                 )
             except ValueError:
-                return None 
+                return None
 
 As you can see, there's not much to it as I leveraged most of BaseOAuth2's functionality. As I mentioned before, I also wanted to allow for the use case when the third party site requires a parameters to look for the user's profile info. To support this, I created another authentication provider based on BaseOAuth2:
 

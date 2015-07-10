@@ -180,70 +180,86 @@ server {
         "model": "auth.user",
         "pk": 1,
         "fields": {
+            "first_name": "",
+            "last_name": "",
+            "groups": [],
+            "email": "vagrant@rest-oauth-social-test.local",
             "date_joined": "2015-07-08T00:22:51.199Z",
+            "last_login": "2015-07-10T17:30:48.780Z",
+            "is_staff": true,
+            "username": "admin",
             "is_superuser": true,
             "user_permissions": [],
-            "is_staff": true,
-            "first_name": "",
-            "password": "pbkdf2_sha256$20000$fUZfRXo5pI0X$uq5/DUsH4ArHdhr5Dv0gfKauW6HMrX4o3ANE5d7sois=",
-            "email": "vagrant@rest-oauth-social-test.local",
-            "username": "admin",
-            "groups": [],
-            "last_name": "",
-            "last_login": "2015-07-10T17:04:01.932Z",
-            "is_active": true
+            "is_active": true,
+            "password": "pbkdf2_sha256$20000$fUZfRXo5pI0X$uq5/DUsH4ArHdhr5Dv0gfKauW6HMrX4o3ANE5d7sois="
         }
     },
     {
         "model": "auth.user",
         "pk": 2,
         "fields": {
+            "first_name": "John",
+            "last_name": "Doe",
+            "groups": [],
+            "email": "john.doe@rest-oauth-social-test.local",
             "date_joined": "2015-07-08T00:52:05Z",
+            "last_login": null,
+            "is_staff": false,
+            "username": "user1",
             "is_superuser": false,
             "user_permissions": [],
-            "is_staff": false,
-            "first_name": "John",
-            "password": "pbkdf2_sha256$20000$FUn3mhnbQNHz$SDYMXBmFNOcT/tKK6Xq162M8PoWv+ox3YsplPD8OWeI=",
-            "email": "john.doe@rest-oauth-social-test.local",
-            "username": "user1",
-            "groups": [],
-            "last_name": "Doe",
-            "last_login": null,
-            "is_active": true
+            "is_active": true,
+            "password": "pbkdf2_sha256$20000$FUn3mhnbQNHz$SDYMXBmFNOcT/tKK6Xq162M8PoWv+ox3YsplPD8OWeI="
         }
     },
     {
         "model": "auth.user",
         "pk": 3,
         "fields": {
+            "first_name": "Jane",
+            "last_name": "Doe",
+            "groups": [],
+            "email": "jane.doe@rest-oauth-social-test.local",
             "date_joined": "2015-07-08T00:53:06Z",
+            "last_login": null,
+            "is_staff": false,
+            "username": "user2",
             "is_superuser": false,
             "user_permissions": [],
-            "is_staff": false,
-            "first_name": "Jane",
-            "password": "pbkdf2_sha256$20000$IZ3WijqqoQQA$kszc9d98228H9Gkl/Ar64Sst2UVkrweA45TxUubgdPQ=",
-            "email": "jane.doe@rest-oauth-social-test.local",
-            "username": "user2",
-            "groups": [],
-            "last_name": "Doe",
-            "last_login": null,
-            "is_active": true
+            "is_active": true,
+            "password": "pbkdf2_sha256$20000$IZ3WijqqoQQA$kszc9d98228H9Gkl/Ar64Sst2UVkrweA45TxUubgdPQ="
         }
     },
     {
         "model": "oauth2_provider.application",
         "pk": 1,
         "fields": {
+            "skip_authorization": true,
+            "redirect_uris": "",
+            "name": "my-api-app",
+            "authorization_grant_type": "password",
+            "client_type": "public",
             "client_id": "ZQcMr611iZMcUskTGoRcyZuhqCjZYy08lyOsWM5d",
+            "client_secret": "Ve0AVjI4G7JwPj0spAz4jvY0nNxGGfK9q6IJXqARRS3oobDY0sYxqepH0i1euXDLfcbWe8Dx27atNMyJvg3vRLssUBJd4otkoNgxD6jwje5l3ipJnwGpNy3QFq0EhB1g",
             "user": [
                 "admin"
-            ],
-            "authorization_grant_type": "password",
-            "client_secret": "Ve0AVjI4G7JwPj0spAz4jvY0nNxGGfK9q6IJXqARRS3oobDY0sYxqepH0i1euXDLfcbWe8Dx27atNMyJvg3vRLssUBJd4otkoNgxD6jwje5l3ipJnwGpNy3QFq0EhB1g",
+            ]
+        }
+    },
+    {
+        "model": "oauth2_provider.application",
+        "pk": 2,
+        "fields": {
             "skip_authorization": true,
+            "redirect_uris": "",
+            "name": "fake-social-site-app",
+            "authorization_grant_type": "password",
             "client_type": "public",
-            "name": "my-api-app",
-            "redirect_uris": ""
+            "client_id": "aNARymvEsn21XPdpR9wJ8tPcUyto7rCu1ywo6H1T",
+            "client_secret": "6Q7nFgQ8UExu2XhaNbI56DQAWTQvnVp7D9l3S9Ps1kpju3fH6NSRPfXktF92gZWmG1q7974NkuJSTm7nahTKdmaKcsaevA2U0tRjE4oXD66bqQrxDjQR8B7AK5JOM9Ko",
+            "user": [
+                "admin"
+            ]
         }
     }
     ]
