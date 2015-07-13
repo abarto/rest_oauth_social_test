@@ -9,7 +9,7 @@ class Item(TimeStampedModel, models.Model):
     owner = models.ForeignKey('auth.User', verbose_name=_('owner'), related_name='items')
     mass = models.FloatField(_('mass'), blank=True, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -19,5 +19,5 @@ class ItemGroup(TimeStampedModel, models.Model):
     owner = models.ForeignKey('auth.User', verbose_name=_('owner'), related_name='itemgroups')
     items = models.ManyToManyField(Item, verbose_name=_('items'))
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
