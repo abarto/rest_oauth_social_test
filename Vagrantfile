@@ -160,7 +160,7 @@ server {
   SHELL
 
   config.vm.provision "shell", inline: <<-SHELL
-      service nginx restart
+      service nginx reload
   SHELL
 
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
